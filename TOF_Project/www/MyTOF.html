@@ -1,0 +1,33 @@
+﻿<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var DL = window.localStorage.getItem("DLLS");;
+            var url = "http://adtendemarcam.000webhostapp.com/json.php";
+            $.getJSON(url, 'DL=' + DL, function (result) {
+                console.log(result);
+                $.each(result, function (i, field) {
+                    var NOF = field.NOF;
+                    var FinePrize = field.FinePrize;
+                    var VN = field.VN;
+                    var OffDate = field.OffDate;
+                    var POName = field.POName;
+                    var POStation = field.POStation;
+                    window.localStorage.setItem("Hash", field.id);
+                    $("#listview").append("<span class='item-note'>RS " + FinePrize + "     </span><h3>Nature of Offence </h3><h3>" + NOF + " </h3><h4> Police Station  " + POStation + " </h4><p> Date " + OffDate + "</p><p> Police Officer  " + POName + "</p></a>");
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <a href="HomeCivil.html" class="button button-clear">Home</a>
+        <h1 class="title">My TOF</h1>
+        <a href="TOF Pay.html" class="button button-clear">Pay Now</a>
+    </div><br /><br />
+    <ul class="list" id="listview"></ul>
+</body>
+</html>

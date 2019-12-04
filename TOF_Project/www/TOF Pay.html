@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
+
+    <title>Pay</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style type="text/css">
+
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: #00132F;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOF Pay</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/main.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            var HashKey = window.localStorage.getItem("Hash");
+            document.getElementById("HashId").innerHTML = "This Is your Hash Key : " + HashKey;
+
+            document.getElementById("CardNumber").value = window.localStorage.getItem("CardNumberLS");
+            document.getElementById("Emonth").value = window.localStorage.getItem("EMonthLS");
+            document.getElementById("Eyear").value = window.localStorage.getItem("EyearLS");
+            document.getElementById("CVV").value = window.localStorage.getItem("CVVLS");
+            document.getElementById("BAdd").value = window.localStorage.getItem("BillingAddLS");
+
+            ("#insert").click(function () {
+                var HashKey = window.localStorage.getItem("Hash");
+                var Pass = window.localStorage.getItem("civipassword");
+                var password = $("#password").val();
+
+                var dataString = "id=" + HashKey + "&insert=";
+
+                if ($.trim(password) == Pass) {
+                    $.ajax
+                        ({
+                            type: 'post',
+                            url: 'http://adtendemarcam.000webhostapp.com/TOFDelete.php',
+                            data: dataString,
+                            crossDomain: true,
+                            cache: false,
+                            beforeSend: function () { $("#insert").val('Connecting...'); },
+                            success: function (response) {
+                                if (response == "success") {
+                                 
+                                    window.location.href = "HomeCivil.html";
+                                }
+                                else if (response == "error") {
+
+                                    alert("error")
+                                }
+                                else {
+                                    alert("something went Wrong")
+                                }
+                            }
+                        });
+                }
+
+                else {
+                    alert("Wrong Password");
+                }
+
+                return false;
+
+            });
+
+        });
+    </script>
+
+</head>
+
+
+    <body>
+
+        <form action="index.html" method="post">
+
+            <h1>fine in lieu of prosecution pay</h1>
+
+
+
+            <fieldset>
+                <legend>Pay Now</legend>  <a href="HomeCivil.html"></a><legend>Home</legend>
+                <label for="job" id="HashId">Hash Number</label>
+            </fieldset>
+
+            <legend>Card Details:</legend>
+            Card Number <input type="text" id="CardNumber">
+            Expire Month <input type="text" id="Emonth">
+            Expire Year <input type="text" id="Eyear">
+            CVV <input type="text" id="CVV">
+            Billing Address <input type="text" id="BAdd">
+
+            <fieldset>
+
+
+                <label>Password:</label>
+                <input type="password" id="password" name="password">
+
+            </fieldset>
+            <fieldset>
+                <input type="button" id="insert" name="insert" value="Pay" />
+                <a href="HomeCivil.html" style="text-decoration:none"><input type="button" value="Home"> </a>
+
+            </fieldset>
+
+        </form>
+      
+    </body>
+</html>
+  
+  
+

@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=0" />
+
+    <title>Create</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style type="text/css">
+
+        input[type=button], input[type=submit], input[type=reset] {
+            background-color: #00132F;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#insert").click(function () {
+                
+                var currentdate = new Date();
+                var datetime = currentdate.getFullYear() + "-"
+                    + (currentdate.getMonth() + 1) + "-"
+                    + currentdate.getDate() + " "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
+
+                var PONum = window.localStorage.getItem("officernumberLS");
+                var POName = window.localStorage.getItem("officernameLS");
+                var POStation = window.localStorage.getItem("officerstationLS");
+                
+                var DL = $("#DL").val();
+                var NOF = $("#job").val();
+                var FinePrize = $("#prize").val();
+                var VN = $("#VL").val();
+
+
+                var dataString = "DL=" + DL + "&NOF=" + NOF + "&VN=" + VN + "&offDate=" + datetime + "&PONum=" + PONum + "&POName=" + POName + "&POStation=" + POStation + "&FinePrize=" + FinePrize + "&insert=";
+                if ($.trim(DL).length > 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: "http://adtendemarcam.000webhostapp.com/TOFCreate.php",
+                        data: dataString,
+                        crossDomain: true,
+                        cache: false,
+                        beforeSend: function () { $("#insert").val('Connecting...'); },
+                        success: function (data) {
+                            if (data == "success") {
+                                alert("successfully created a fine in lieu of prosecution");
+                                $("#insert").val('submit');
+                                location.href = 'HomeOfficer.html';
+                            }
+                            else if (data == "error") {
+                                alert("error");
+                            }
+                        }
+                    });
+                } return false;
+            });
+        });
+    </script>
+
+
+</head>
+
+<body>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up Form</title>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+
+      <form action="index.html" method="post">
+
+          <h1>fine in lieu of prosecution</h1>
+
+          <fieldset>
+              <legend><span class="number">1</span>Create Now</legend>
+              <label>Driving Licence Number</label>
+              <input type="text" id="DL" value="">
+
+              <label>Prize:</label>
+              <input type="text" id="prize" value="">
+
+              <label>Vehicle Number:</label>
+              <input type="text" id="VL" value="">
+          </fieldset>
+
+        <fieldset>
+          <legend><span class="number">2</span>Offence</legend>
+
+        </fieldset>
+        <fieldset>
+            <label for="job">Offence and fine:</label>
+            <select id="job" name="user_job">
+                <optgroup label=Rs-500.00>
+                    <option value="Section_196">
+                        Fail to carry emission
+                        certificate or fitness certificate
+                    </option>
+                    <option value="Section_189">Exceed number of persons carried in a lorry</option>
+                    <option value="Section_188">Carrying goods in excess of maximum load</option>
+                    <option value="Section_179">
+                        Carriage of persons or passengers in
+                        excess and of goods other than personal luggage in omnibuses
+                    </option>
+                    <option value="Section_178">Carriage of persons in excess of and of goods other than personal luggag...</option>
+                    <option value="Section_156">Prohibit riding or permitting to ride on running boards &c. of motor vehicles</option>
+
+                </optgroup>
+                <optgroup label=Rs-1000.00>
+                    <option value="Section_38">Revenue Licensed to be displayed on motor vehicles and produced when required</option>
+                    <option value="Section_45">Prohibition on the use of motor vehicles in contravention of the provision of revenue license</option>
+                    <option value="Section_128A">Failure to obtain authorization to drive emergency service and public service vehicles</option>
+                    <option value="Section_128B">Driving a special purpose vehicle without obtaining a license</option>
+                    <option value="Section_128C">Failure to obtain authorization to drive a vehicle loaded with chemicals..</option>
+                    <option value="Section_130">Failure to have a license to drive a specific class of vehicles.</option>
+                    <option value="Section_135">Failure to carry a driving license when driving </option>
+                    <option value="Section_152">Unobstructed control of vehicle when driving</option>
+                    <option value="Section_154">Prohibit reversing a motor vehicle for a long distance on a road</option>
+                    <option value="Section_155">Improper use of warning instruments.</option>
+                    <option value="Section_155A">Excessive emissions of smoke & c.</option>
+                    <option value="Section_157">Restriction on the number of persons in front seats of motor cars.</option>
+                    <option value="Section_157A">Non-use of seat belts.</option>
+                    <option value="Section_158">Failure to wear protective helmet when driving.</option>
+                    <option value="Section_159">Prohibition to distribute advertisements from a vehicle in motion</option>
+                    <option value="Section_160">Prohibit excessive use of noise from a vehicle</option>
+                    <option value="Section_164">Non-compliance with traffic sign</option>
+                    <option value="Section_165">Failure to take precaution when discharging fuel into the tank</option>
+                    <option value="Section_166">Not halting or parking of motor vehicle on a road.</option>
+                    <option value="Section_190">Violation of regulations</option>
+                </optgroup>
+                <optgroup label=Rs-2000.00>
+                    <option value="Section_139A">Instructing without an instructor’s license</option>
+                    <option value="Section_148">Failure to comply with road rules.</option>
+                    <option value="Section_162">Failure to obey directions and signal of police officers &c.</option>
+                    <option value="Section_167">Violation of regulations</option>
+                </optgroup>
+
+            </select>
+
+            <fieldset>
+                <input type="button" id="insert" value="Insert" />
+                
+                <a href="HomeOfficer.html" style="text-decoration:none"><input type="button" value="Home"> </a>
+
+            </fieldset>
+
+
+            </div>
+</form>
+
+    </body>
+</html>
+
+
+
+
+
+
